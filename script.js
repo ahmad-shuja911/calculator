@@ -1,7 +1,7 @@
 const display = document.getElementById("display");
 const historyDiv = document.getElementById("history");
 
-let history = JSON.parse(localStorage.getItem("history")) || [];
+let history = JSON.parse(localStorage.getItem("history")) ;
 
 showHistory();
 
@@ -30,7 +30,7 @@ function calculate(){
 
         localStorage.setItem("history",JSON.stringify(history));
 
-        showHistory();
+        // showHistory();
 
         display.value = result;
 
@@ -41,6 +41,7 @@ function calculate(){
 }
 
 function showHistory(){
+    // history.innerHTML=display.value
 
     historyDiv.innerHTML="";
 
