@@ -1,5 +1,4 @@
 const display = document.getElementById("display");
-// const historyDiv = document.getElementById("history");
 let history = JSON.parse(localStorage.getItem("history"));
 
 
@@ -48,14 +47,5 @@ function calculate() {
 function showHistory() {
     display.value = history;
 
-    // history.forEach(item => {
-
-    //     const div = document.createElement("div");
-    //     div.className = "history-item";
-    //     div.innerText = item;
-
-    //     historyDiv.appendChild(div);
-
-    // });
-
+   
 }
