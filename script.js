@@ -1,6 +1,6 @@
 const display = document.getElementById("display");
-let history = JSON.parse(localStorage.getItem("history"));
-
+let history = JSON.parse(localStorage.getItem("history")) || [];
+let currentHistoryIndex = history.length - 1;
 
 
 function addNum(value) {
@@ -22,30 +22,32 @@ function calculate() {
     try {
 
         let expression = display.value;
-        
 
-        // Insert * between a number and an opening parenthesis
         expression = expression.replace(/(\d)\(/g, "$1*(");
 
         let result = eval(expression);
-        
 
-        history = result;
-
-        localStorage.setItem("history", JSON.stringify(history));
-
-
-
+        history.push(result);
+        localStorage.setItem("history", JSON.stringify(history))||[];
         display.value = result;
+        currentHistoryIndex = history.length - 1;
 
-    } catch {
+
+    } catch (err) {
+        console.log(err);
         display.value = "Error";
     }
 
 }
 
 function showHistory() {
-    display.value = history;
-
-   
+    if (history.length === 0) {
+        display.value = "No history available";
+        return;
+    }
+    console.log(currentHistoryIndex);
+    display.value = history[currentHistoryIndex];
+    if (currentHistoryIndex > 0) {
+        currentHistoryIndex--;
+    }
 }
