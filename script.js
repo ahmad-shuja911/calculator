@@ -6,8 +6,23 @@ function addNum(value) {
     display.value += value;
 }
 
+let clearPressed = false;
+
 function clearDisplay() {
+    if (!clearPressed) {
+        display.value = "";
+        clearPressed = true;
+        return;
+    }
+
+    // Second click
+    history = [];
+    localStorage.removeItem("history");
+
+    historyIndex = -1;
+
     display.value = "";
+    clearPressed = false;
 }
 
 function backspace() {
@@ -41,7 +56,7 @@ function calculate() {
 
 function showHistory() {
     if (history.length === 0) {
-        display.value = "No history available";
+        display.value = "Not available";
         return;
     }
 
@@ -54,7 +69,7 @@ function showHistory() {
 
 function forshowHistory() {
     if (history.length === 0) {
-        display.value = "No history available";
+        display.value = "Not available";
         return;
     }
 
