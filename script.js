@@ -1,5 +1,4 @@
 const display = document.getElementById("display");
-
 let history = JSON.parse(localStorage.getItem("history")) || [];
 let currentHistoryIndex = history.length - 1;
 let clearPressed = false;
@@ -24,9 +23,11 @@ function addNum(value) {
         display.value = displayedHistory.result + value;
 
         showingHistory = false;
+        clearPressed = false;
 
         return;
     }
+    clearPressed = false;
 
     display.value += value;
 }
@@ -38,10 +39,9 @@ function clearDisplay() {
 
         display.value = "";
         clearPressed = true;
-
+        console.log(clearPressed);
         return;
     }
-
 
     history = [];
 
@@ -51,7 +51,7 @@ function clearDisplay() {
 
     display.value = "";
 
-    clearPressed = false;
+    clearPressed = false; console.log(clearPressed);
 }
 
 
@@ -86,7 +86,7 @@ function calculate() {
 
         display.value = result;
 
-        historyIndex = history.length - 1;
+        currentHistoryIndex = history.length - 1;
 
     } catch (err) {
 
