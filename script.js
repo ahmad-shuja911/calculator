@@ -1,10 +1,9 @@
 const display = document.getElementById("display");
 let history = JSON.parse(localStorage.getItem("history")) || [];
 let currentHistoryIndex = history.length - 1;
-let clearPressed = false;
 let displayedHistory = null;
 let showingHistory = false;
-
+let clearTimer = null;
 
 function addNum(value) {
 
@@ -19,48 +18,46 @@ function addNum(value) {
     }
 
     if (showingHistory) {
-
         display.value = displayedHistory.result + value;
-
         showingHistory = false;
-        clearPressed = false;
-
-        return;
+    } else {
+        display.value += value;
     }
-    clearPressed = false;
 
-    display.value += value;
+    if (clearTimer !== null) {
+        clearTimeout(clearTimer);
+        clearTimer = null;
+    }
 }
-
 
 function clearDisplay() {
 
-    if (!clearPressed) {
-
-        display.value = "";
-        clearPressed = true;
-        console.log(clearPressed);
-        return;
-    }
-
-    history = [];
-
-    localStorage.removeItem("history");
-
-    historyIndex = -1;
-
     display.value = "";
+    showingHistory = false;
+    displayedHistory = null;
 
-    clearPressed = false; console.log(clearPressed);
+    if (clearTimer !== null) {
+
+        history = [];
+
+        localStorage.removeItem("history");
+
+        currentHistoryIndex = -1;
+
+        clearTimeout(clearTimer);
+        clearTimer = null;
+
+        console.log("History cleared");
+
+    } else {
+
+        clearTimer = setTimeout(() => {
+
+            clearTimer = null;
+
+        }, 1000);
+    }
 }
-
-
-function backspace() {
-
-    display.value = display.value.slice(0, -1);
-
-}
-
 
 function calculate() {
 
